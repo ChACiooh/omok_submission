@@ -6,7 +6,7 @@ using namespace std;
 int main()
 {
     srand(time(NULL));
-    bool mifirst = false;
+    bool mifirst = WHITE;
     int board[HEIGHT][WIDTH];
     int w_cnt, b_cnt;
     w_cnt = b_cnt = 0;
@@ -23,14 +23,21 @@ int main()
         int x, y;
         cin >> x >> y;
 
-        if(x == 0 && y == 0)    mifirst = true;
-        else    board[y][x] = !mifirst; // 상대편 돌을 놓는다.
+        if(x == 0 && y == 0)    mifirst = BLACK;
+        else
+        {
+            board[y][x] = !mifirst; // 상대편 돌을 놓는다.
+            if(mifirst == BLACK)    w_cnt++;
+            else    b_cnt++;
+        }
 
         AIResult res = ai.Run(board, b_cnt, w_cnt, !mifirst, 5);
         x = res.dol.x;
         y = res.dol.y;
         cout << x << " " << y << endl;
         board[y][x] = mifirst;
+        if(mifirst == BLACK)    b_cnt++;
+        else    w_cnt++;
     }
     return 0;
 }
