@@ -9,10 +9,6 @@ using namespace std;
 class Dol
 {
 public:
-    bool IsItBlack() const { return imblack; }
-    pair<int, int> GetCoordinate() const { return coordinate; }
-
-protected:
     Dol() {}
     Dol(int x, int y, bool miblack)
     {
@@ -20,10 +16,12 @@ protected:
         coordinate.second = y;
         imblack = miblack;
     }
-    bool imblack;
+    bool IsItBlack() const { return imblack; }
+    pair<int, int> GetCoordinate() const { return coordinate; }
 
 private:
     pair<int, int> coordinate;
+    bool imblack;
 };
 
 
@@ -50,11 +48,11 @@ private:
     vector<Dol> dols;
 };
 
-class Defence : public Dol
+class Defence
 {
 public:
     Defence() {}
-    Defence(bool black) : myColor(black), direct(0), count(0) {}
+    Defence(bool black) : myColor(black), putComplete(false), direct(0), count(0) {}
     void Put(int x, int y, bool isblack);
     void DFS(int x, int y, int cnt = 5);
 
@@ -63,6 +61,7 @@ public:
 private:
     Board board;
     bool myColor;
+    bool putComplete;
     int direct;
     int count;
 };

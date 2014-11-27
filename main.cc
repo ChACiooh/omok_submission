@@ -27,7 +27,7 @@ int main()
             defenceSet = true;
         }
 
-        def.Put(x, y, !def.GetMyColor());
+        // change direction in for, and check the direction that gained max count.
     }
     return 0;
 }
