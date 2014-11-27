@@ -1,5 +1,7 @@
 #include "omok.h"
 
+bool comp(pair<int, pair<Dol, int> > a, pair<int, pair<Dol, int> > b) { return a.first < b.first; }
+
 pair<bool, bool> Board::IsItOn(int x, int y) const
 {
     pair<int, int> c = make_pair(x, y);
@@ -16,61 +18,55 @@ pair<bool, bool> Board::IsItOn(int x, int y) const
     return make_pair(find, color);
 }
 
+const Dol& Board::GetDol(int x, int y)
+{
+    // under existion on (x, y).
+    pair<int, int> c = make_pair(x, y);
+    size_t i;
+    for(i = 0; i < dols.size(); i++)
+        if(dols[i].GetCoordinate() == c)    break;
+
+    return GetDol(i);
+}
+
 void Defence::Put(int x, int y, bool isblack)
 {
     putComplete = true;
     Dol dol(x, y, isblack);
-    board.insert(dol);
+    Board::insert(dol);
 }
 
 void Defence::DFS(int x, int y, int cnt)
 {
-    if(x < board.GetXMin() || x > board.GetWidth() ||
-       y < board.GetYMin() || y > board.GetHeight())    return;
-
-    pair<bool, bool> test = board.IsItOn(x, y);
-    if(test.first)
+    if(cnt!=5 && cnt_is_not_5 == false)
     {
-        if(test.second != myColor)  count++;
+        cnt_is_not_5 = true;
     }
-    else if(count >=2)
+    if(x < Board::GetXMin() || x > Board::GetWidth() ||
+       y < Board::GetYMin() || y > Board::GetHeight())    return;
+
+    pair<bool, bool> test = Board::IsItOn(x, y);
+    if(test.first) // found
     {
-        Put(x, y, myColor);
-        return;
+        if(test.second != myColor)  e_count++;
+        else    m_count++;
+    }
+    else if(cnt <= 3)
+    {
+        if(e_count < 1) return;
     }
 
-    if(cnt < 0)    return;
+    if(cnt < 0 || !direct)    return;
 
         /** dx[] = 0, -1, 0, 1, -1, 1, -1, 0, 1
          * dy[] = 0, -1, -1, -1, 0, 0, 1, 1, 1
          */
-    switch(direct)
-    {
-    case 0:
-        break;
-    case 1:
-        DFS(x-1, y-1, cnt-1);
-        break;
-    case 2:
-        DFS(x, y-1, cnt-1);
-        break;
-    case 3:
-        DFS(x+1, y-1, cnt-1);
-        break;
-    case 4:
-        DFS(x-1, y, cnt-1);
-        break;
-    case 5:
-        DFS(x+1, y, cnt-1);
-        break;
-    case 6:
-        DFS(x-1, y+1, cnt-1);
-        break;
-    case 7:
-        DFS(x, y+1, cnt-1);
-        break;
-    case 8:
-        DFS(x+1, y+1, cnt-1);
-        break;
-    }
+    DFS(x+dx[direct], y+dy[direct], cnt-1);
+}
+
+bool Defence::SetDirect(int d)
+{
+    if(d > 9 || d < 0)  return false;
+    direct = d;
+    return true;
 }
