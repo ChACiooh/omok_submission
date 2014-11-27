@@ -162,9 +162,9 @@ bool AI::CheckMove(int AlertLevel, int State)
         NoRepeatCoCnt[i] = 0;
     }
 
-    for(i = 1; i<HEIGHT; i++)
+    for(i = IH; i<HEIGHT; i++)
     {
-        for(j = 1; j<WIDTH; j++)
+        for(j = IW; j<WIDTH; j++)
         {
             if(State == GUARD_STATE)
             {
@@ -380,13 +380,6 @@ bool AI::CheckMove(int AlertLevel, int State)
     return false;
 } // end int AI::CheckMove(int AlertLevel, int State).
 
-void AI::CopyBoard(int** target)
-{
-    for(int i=0;i<HEIGHT;i++)
-        for(int j=0;j<WIDTH;j++)
-            target[i][j] = board[i][j];
-}
-
 
 /*** check row ***/
 int AI::RowCheck(int x, int y, bool player1, bool player2, bool iErr, bool jErr, bool bSpaceChk)
@@ -399,7 +392,7 @@ int AI::RowCheck(int x, int y, bool player1, bool player2, bool iErr, bool jErr,
     // 오목 체크.
     while(true)
     {
-        if(x-i >= 1 || iErr == true)
+        if(x-i >= IW || iErr == true)
         {
             if(!iErr)
             {
@@ -408,7 +401,7 @@ int AI::RowCheck(int x, int y, bool player1, bool player2, bool iErr, bool jErr,
                     Cnt++;
                     SpaceCnt = 0; // 공백 갯수 초기화.
 
-                    if(x-i != 0)
+                    if(x-i != IW) /******/
                         i++;
                     else
                         iErr = true;
@@ -439,7 +432,7 @@ int AI::RowCheck(int x, int y, bool player1, bool player2, bool iErr, bool jErr,
                         else
                         {
                             // 공백 갯수만 셀뿐, 바둑돌의 갯수는 카운트 하지 않는다.
-                            if(x-i != 0)
+                            if(x-i != IW) /******/
                                 i++;
                             else
                                 iErr = true;
@@ -448,7 +441,7 @@ int AI::RowCheck(int x, int y, bool player1, bool player2, bool iErr, bool jErr,
                 }
             }
         }
-        else if(x == 1)
+        else if(x == IW)
         {
             iErr = true;
             continue;
@@ -594,7 +587,7 @@ int AI::ColCheck(int x, int y, bool player1, bool player2, bool iErr, bool jErr,
     // 오목 체크.
     while(true)
     {
-        if(y-i >= 1 || iErr == true)
+        if(y-i >= IH || iErr == true)
         {
             if(!iErr)
             {
@@ -603,7 +596,7 @@ int AI::ColCheck(int x, int y, bool player1, bool player2, bool iErr, bool jErr,
                     Cnt++;
                     SpaceCnt = 0; // 공백 갯수 초기화.
 
-                    if(y-i != 1)
+                    if(y-i != IH)
                         i++;
                     else
                         iErr = true;
@@ -632,7 +625,7 @@ int AI::ColCheck(int x, int y, bool player1, bool player2, bool iErr, bool jErr,
                         else
                         {
                             // 공백 갯수만 셀뿐, 바둑돌의 갯수는 카운트 하지 않는다.
-                            if(y-i != 1)
+                            if(y-i != IH)
                                 i++;
                             else
                                 iErr = true;
@@ -641,7 +634,7 @@ int AI::ColCheck(int x, int y, bool player1, bool player2, bool iErr, bool jErr,
                 }
             }
         }
-        else if(y == 1)
+        else if(y == IH)
         {
             iErr = true;
             continue;
@@ -784,7 +777,7 @@ int AI::UpperDiagCheck(int x, int y, bool player1, bool player2, bool iErr, bool
     // 오목 체크.
     while(true)
     {
-        if((x-i >= 1 && y+i < HEIGHT) || iErr == true)
+        if(x-i >= IW && y+i < HEIGHT || iErr == true)
         {
             if(!iErr)
             {
@@ -793,7 +786,7 @@ int AI::UpperDiagCheck(int x, int y, bool player1, bool player2, bool iErr, bool
                     Cnt++;
                     SpaceCnt = 0; // 공백 갯수 초기화.
 
-                    if(x-i != 1 && y+i != HEIGHT - 1)
+                    if(x-i != IW && y+i != HEIGHT - 1)
                         i++;
                     else
                         iErr = true;
@@ -824,7 +817,7 @@ int AI::UpperDiagCheck(int x, int y, bool player1, bool player2, bool iErr, bool
                         else
                         {
                             // 공백 갯수만 셀뿐, 바둑돌의 갯수는 카운트 하지 않는다.
-                            if(x-i != 1 && y+i != HEIGHT - 1)
+                            if(x-i != IW && y+i != HEIGHT - 1)
                                 i++;
                             else
                                 iErr = true;
@@ -833,13 +826,13 @@ int AI::UpperDiagCheck(int x, int y, bool player1, bool player2, bool iErr, bool
                 }
             }
         }
-        else if(x == 1 || y == HEIGHT-1)
+        else if(x == IW || y == HEIGHT-1)
         {
             iErr = true;
             continue;
         }
 
-        if((x+j < WIDTH && y-j >= 1) || jErr == true)
+        if(x+j < WIDTH && y-j >= IH || jErr == true)
         {
             if(!jErr)
             {
@@ -848,7 +841,7 @@ int AI::UpperDiagCheck(int x, int y, bool player1, bool player2, bool iErr, bool
                     Cnt++;
                     SpaceCnt = 0; // 공백 갯수 초기화.
 
-                    if(x+j != WIDTH - 1 && y-j != 1)
+                    if(x+j != WIDTH - 1 && y-j != IH)
                         j++;
                     else
                         jErr = true;
@@ -879,7 +872,7 @@ int AI::UpperDiagCheck(int x, int y, bool player1, bool player2, bool iErr, bool
                         else
                         {
                             // 공백 갯수만 셀뿐, 바둑돌의 갯수는 카운트 하지 않는다.
-                            if(x+j != WIDTH - 1 && y-j != 1)
+                            if(x+j != WIDTH - 1 && y-j != IH)
                                 j++;
                             else
                                 jErr = true;
@@ -888,7 +881,7 @@ int AI::UpperDiagCheck(int x, int y, bool player1, bool player2, bool iErr, bool
                 }
             }
         }
-        else if(x == WIDTH-1 || y == 1)
+        else if(x == WIDTH-1 || y == IH)
         {
             jErr = true;
             continue;
@@ -975,7 +968,7 @@ int AI::LowerDiagCheck(int x, int y, bool player1, bool player2, bool iErr, bool
     // 오목 체크.
     while(true)
     {
-        if((x-i >= 1 && y-i >= 1) || iErr == true)
+        if(x-i >= IW && y-i >= IH || iErr == true)
         {
             if(!iErr)
             {
@@ -984,7 +977,7 @@ int AI::LowerDiagCheck(int x, int y, bool player1, bool player2, bool iErr, bool
                     Cnt++;
                     SpaceCnt = 0; // 공백 갯수 초기화.
 
-                    if(x-i != 1 && y-i != 1)
+                    if(x-i != IW && y-i != IH)
                         i++;
                     else
                         iErr = true;
@@ -1015,7 +1008,7 @@ int AI::LowerDiagCheck(int x, int y, bool player1, bool player2, bool iErr, bool
                         else
                         {
                             // 공백 갯수만 셀뿐, 바둑돌의 갯수는 카운트 하지 않는다.
-                            if(x-i != 1 && y-i != 1)
+                            if(x-i != IW && y-i != IH)
                                 i++;
                             else
                                 iErr = true;
@@ -1024,13 +1017,13 @@ int AI::LowerDiagCheck(int x, int y, bool player1, bool player2, bool iErr, bool
                 }
             }
         }
-        else if(x == 1 || y == 1)
+        else if(x == IW || y == IH)
         {
             iErr = true;
             continue;
         }
 
-        if((x+j < WIDTH && y+j < HEIGHT) || jErr == true)
+        if(x+j < WIDTH && y+j < HEIGHT || jErr == true)
         {
             if(!jErr)
             {

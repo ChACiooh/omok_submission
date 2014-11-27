@@ -13,8 +13,10 @@
 #define BLACK       0
 #define WHITE       1
 
-#define WIDTH   20
-#define HEIGHT  20
+#define WIDTH   19
+#define HEIGHT  19
+#define IW 0
+#define IH 0
 
 #define PLAYER              0
 #define ENEMY               1
@@ -22,7 +24,7 @@
 #define GUARD_STATE         0
 #define ATTACK_STATE        1
 
-#define ARRAY_CNT           300
+#define ARRAY_CNT           361
 
 #define UPPER_OMOK_1ST      13  // 6개 이상. (상대편의 방어가 없는 경우)
 #define UPPER_OMOK_2ND      12  // 6개 이상. (상대편의 방어가 있는 경우)
@@ -57,7 +59,6 @@ class AI
         AIResult Run(int arrayboard[HEIGHT][WIDTH], int BlackCnt, int WhiteCnt, bool COMTurn, int Difficulty=3);
 
         bool CheckMove(int AlertLevel, int State);
-        void CopyBoard(int** target);
 
         int RowCheck(int x, int y, bool player1, bool player2,
                      bool iErr = false, bool jErr = false, bool bSpaceChk=false);

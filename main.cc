@@ -11,6 +11,7 @@ int main()
     int w_cnt, b_cnt;
     w_cnt = b_cnt = 0;
     AI ai;
+    AIResult res;
 
     for(int i=0;i<HEIGHT;i++)
     {
@@ -19,25 +20,44 @@ int main()
     }
 
     while(true)
-    {
+    {try{
         int x, y;
         cin >> x >> y;
 
         if(x == 0 && y == 0)    mifirst = BLACK;
         else
         {
-            board[y][x] = !mifirst; // 상대편 돌을 놓는다.
+            board[y-1][x-1] = !mifirst; // 상대편 돌을 놓는다.
             if(mifirst == BLACK)    w_cnt++;
             else    b_cnt++;
         }
 
-        AIResult res = ai.Run(board, b_cnt, w_cnt, !mifirst, 5);
+        res = ai.Run(board, b_cnt, w_cnt, !mifirst, 5);
         x = res.dol.x;
         y = res.dol.y;
-        cout << x << " " << y << endl;
+        if(x < IW || x >= WIDTH || y < IH || y >= HEIGHT)
+        {
+            for(int i=0;i<HEIGHT;i++)
+            {
+                bool flag = false;
+                for(int j=0;j<WIDTH;j++)
+                {
+                    if(board[i][j] == NODRAW)
+                    {
+                        x = j;
+                        y = i;
+                        flag = true;
+                        break;
+                    }
+                }
+                if(flag)    break;
+            }
+        }
+        cout << x+1 << " " << y+1 << endl;
         board[y][x] = mifirst;
         if(mifirst == BLACK)    b_cnt++;
         else    w_cnt++;
+    }catch(exception e) { break; }
     }
     return 0;
 }
