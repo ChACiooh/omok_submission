@@ -53,6 +53,24 @@ int main()
                 if(flag)    break;
             }
         }
+        else if(board[y][x] != NODRAW)
+        {
+            for(int i=0;i<HEIGHT;i++)
+            {
+                bool flag = false;
+                for(int j=0;j<WIDTH;j++)
+                {
+                    if(board[i][j] == NODRAW)
+                    {
+                        x = j;
+                        y = i;
+                        flag = true;
+                        break;
+                    }
+                }
+                if(flag)    break;
+            }
+        }
         cout << x+1 << " " << y+1 << endl;
         board[y][x] = mifirst;
         if(mifirst == BLACK)    b_cnt++;
