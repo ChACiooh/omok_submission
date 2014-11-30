@@ -64,11 +64,11 @@ AIResult AI::Run(int array_board[HEIGHT][WIDTH], int BlackCnt, int WhiteCnt, boo
         res.result = OMOK_2ND;
         return res;
     }
-    else if(CheckMove(UPPER_OMOK_1ST, GUARD_STATE) == 1) // 바로 공격 당하면 지는 곳이 있는지 체크. (예: 플레이어 돌 5개 이상 - 방어가 있는 경우,)
+    else if(CheckMove(UPPER_OMOK_1ST, GUARD_STATE) == 1) // 바로 공격 당하면 지는 곳이 있는지 체크. (예: 플레이어 돌 5개 이상 - 방어가 없는 경우,)
         return res;
     else if(CheckMove(UPPER_OMOK_2ND, GUARD_STATE) == 1) // 바로 공격 당하면 지는 곳이 있는지 체크. (예: 플레이어 돌 5개 이상 - 방어가 있는 경우,)
         return res;
-    else if(CheckMove(OMOK_1ST, GUARD_STATE) == 1) // 바로 공격 당하면 지는 곳이 있는지 체크. (예: 플레이어 돌 4개 - 방어가 있는 경우,)
+    else if(CheckMove(OMOK_1ST, GUARD_STATE) == 1) // 바로 공격 당하면 지는 곳이 있는지 체크. (예: 플레이어 돌 4개 - 방어가 없는 경우,)
         return res;
     else if(CheckMove(OMOK_2ND, GUARD_STATE) == 1) // 바로 공격 당하면 지는 곳이 있는지 체크. (예: 플레이어 돌 4개 - 방어가 있는 경우,)
         return res;
