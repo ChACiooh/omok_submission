@@ -466,7 +466,7 @@ Priority AI::GetPriority(int cnt, int guard_cnt, bool is_space_chk, int space_cn
 	}
 	return ERROR;
 }
-/*** check row ***/
+
 int AI::CheckMoveContent(int x, int y, int &i, int &cnt, int &space_cnt, bool &err, Dol my_dol, int &guard_cnt, bool is_space_chk,int compare_dest,int compare_src)
 {
 	if (!err)
@@ -567,6 +567,7 @@ int AI::CheckMoveContent(int x, int y, int &i, int &cnt, int &space_cnt, bool &e
 	}
 	return -1;
 }
+/*** check row ***/
 int AI::RowCheck(int x, int y, Dol my_dol, bool is_space_chk)
 {
 	int i = 1, j = 1;   // i는 왼쪽, j는 오른쪽.
