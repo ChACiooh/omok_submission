@@ -14,55 +14,56 @@ Point AI::Run(Dol my_dol, int Difficulty)
 
 	bool is_checked = false;
 
-	if (CheckMove(UPPER_OMOK_1ST, ATTACK_STATE, pos, my_dol) == 1) // 바로 공격 하면 이기는 곳이 있는지 체크. (예: 컴퓨터 돌 5개 이상)
+    /*** 차례대로 방어되어 있고, 없는 순서대로 ***/
+	if (CheckMove(UPPER_OMOK_1ST, ATTACK_STATE, pos, my_dol) == 1) // 6목 이상이 나오는지 체크(방어되어 있음)
 	{
 		is_checked = true;
 	}
-	else if (CheckMove(UPPER_OMOK_2ND, ATTACK_STATE, pos, my_dol) == 1) // 바로 공격 하면 이기는 곳이 있는지 체크. (예: 컴퓨터 돌 5개 이상)
+	else if (CheckMove(UPPER_OMOK_2ND, ATTACK_STATE, pos, my_dol) == 1) // 6목 이상이 나오는지 체크(방어x)
 	{
 		is_checked = true;
 	}
-	else if (CheckMove(OMOK_1ST, ATTACK_STATE, pos, my_dol) == 1) // 바로 공격 하면 이기는 곳이 있는지 체크. (예: 컴퓨터 돌 4개)
+	else if (CheckMove(OMOK_1ST, ATTACK_STATE, pos, my_dol) == 1) // 오목인지 체크
 	{
 		is_checked = true;
 	}
-	else if (CheckMove(OMOK_2ND, ATTACK_STATE, pos, my_dol) == 1) // 바로 공격 하면 이기는 곳이 있는지 체크. (예: 컴퓨터 돌 4개)
+	else if (CheckMove(OMOK_2ND, ATTACK_STATE, pos, my_dol) == 1) // 오목인지 체크
 	{
 		is_checked = true;
 	}
-	else if (CheckMove(UPPER_OMOK_1ST, GUARD_STATE, pos, my_dol) == 1) // 바로 공격 당하면 지는 곳이 있는지 체크. (예: 플레이어 돌 5개 이상 - 방어가 있는 경우,)
+	else if (CheckMove(UPPER_OMOK_1ST, GUARD_STATE, pos, my_dol) == 1) // 상대가 6목 이상이 있는지 체크
 	{
 		is_checked = true;
 	}
-	else if (CheckMove(UPPER_OMOK_2ND, GUARD_STATE, pos, my_dol) == 1) // 바로 공격 당하면 지는 곳이 있는지 체크. (예: 플레이어 돌 5개 이상 - 방어가 있는 경우,)
+	else if (CheckMove(UPPER_OMOK_2ND, GUARD_STATE, pos, my_dol) == 1) // 상대가 6목 이상이 있는지 체크
 	{
 		is_checked = true;
 	}
-	else if (CheckMove(OMOK_1ST, GUARD_STATE, pos, my_dol) == 1) // 바로 공격 당하면 지는 곳이 있는지 체크. (예: 플레이어 돌 4개 - 방어가 있는 경우,)
+	else if (CheckMove(OMOK_1ST, GUARD_STATE, pos, my_dol) == 1) // 여기다 상대가 두면 오목인지 체크
 	{
 		is_checked = true;
 	}
-	else if (CheckMove(OMOK_2ND, GUARD_STATE, pos, my_dol) == 1) // 바로 공격 당하면 지는 곳이 있는지 체크. (예: 플레이어 돌 4개 - 방어가 있는 경우,)
+	else if (CheckMove(OMOK_2ND, GUARD_STATE, pos, my_dol) == 1) // 여기다 상대가 두면 오목인지 체크
 	{
 		is_checked = true;
 	}
 	else if (Difficulty >= 3)
 	{
-		if (CheckMove(OMOK_3RD, GUARD_STATE, pos, my_dol) == 1) // 공격 당하면 질 가능성이 많은곳이 있는지 체크. (공백 포함)
+		if (CheckMove(OMOK_3RD, GUARD_STATE, pos, my_dol) == 1) // 상대가 공백에 두면 오목이 있는지 체크.
 		{
 			is_checked = true;
 		}
-		else if (CheckMove(OMOK_4TH, GUARD_STATE, pos, my_dol) == 1) // 공격 당하면 질 가능성이 많은곳이 있는지 체크. (공백 포함)
+		else if (CheckMove(OMOK_4TH, GUARD_STATE, pos, my_dol) == 1) // 상대가 공백에 두면 오목이 있는지 체크.
 		{
 			is_checked = true;
 		}
 		else if (Difficulty >= 4)
 		{
-			if (CheckMove(OMOK_3RD, ATTACK_STATE, pos, my_dol) == 1) // 공격 당하면 이길 가능성이 많은곳이 있는지 체크. (공백 포함)
+			if (CheckMove(OMOK_3RD, ATTACK_STATE, pos, my_dol) == 1) // 내가 공백에 두면 오목이 있는지 체크
 			{
 				is_checked = true;
 			}
-			else if (CheckMove(OMOK_4TH, ATTACK_STATE, pos, my_dol) == 1) // 공격 하면 이길 가능성이 많은곳이 있는지 체크. (공백 포함)
+			else if (CheckMove(OMOK_4TH, ATTACK_STATE, pos, my_dol) == 1) // 내가 공백에 두면 오목이 있는지 체크
 			{
 				is_checked = true;
 			}
@@ -70,47 +71,47 @@ Point AI::Run(Dol my_dol, int Difficulty)
 	}
 	if (Difficulty >= 2 && !is_checked)
 	{
-		if (CheckMove(DANGER_ATTACK_1ST, ATTACK_STATE, pos, my_dol) == 1) // 컴퓨터 돌 3개 있는 경우 공격. (방어 없을 시, 공백 포함 - 중간에 공백이 있는 경우, 막아도 다른 공격의 길이 생겨 좋다.)
+		if (CheckMove(DANGER_ATTACK_1ST, ATTACK_STATE, pos, my_dol) == 1) // 돌 3개 있는 경우 공격. (방어 없을 시, 공백 포함 - 중간에 공백이 있는 경우, 막아도 다른 공격의 길이 생겨 좋다.)
 		{
 			is_checked = true;
 		}
-		else if (CheckMove(DANGER_ATTACK_2ND, ATTACK_STATE, pos, my_dol) == 1) // 컴퓨터 돌 3개 있는 경우 공격. (방어 없을 시,)
+		else if (CheckMove(DANGER_ATTACK_2ND, ATTACK_STATE, pos, my_dol) == 1) // 돌 3개 있는 경우 공격. (방어 없을 시,)
 		{
 			is_checked = true;
 		}
-		else if (CheckMove(DANGER_ATTACK_3RD, ATTACK_STATE, pos, my_dol) == 1) // 컴퓨터 돌 3개 있는 경우 공격. (방어 없을 시, 공백 포함 - 중간에 공백이 있는 경우, 막아도 다른 공격의 길이 생겨 좋다.)
+		else if (CheckMove(DANGER_ATTACK_3RD, ATTACK_STATE, pos, my_dol) == 1) // 돌 3개 있는 경우 공격. (방어 없을 시, 공백 포함 - 중간에 공백이 있는 경우, 막아도 다른 공격의 길이 생겨 좋다.)
 		{
 			is_checked = true;
 		}
-		else if (CheckMove(DANGER_ATTACK_4TH, ATTACK_STATE, pos, my_dol) == 1) // 컴퓨터 돌 3개 있는 경우 공격. (방어 있을 시,)
+		else if (CheckMove(DANGER_ATTACK_4TH, ATTACK_STATE, pos, my_dol) == 1) // 돌 3개 있는 경우 공격. (방어 있을 시,)
 		{
 			is_checked = true;
 		}
-		else if (CheckMove(ATTACK_1ST, ATTACK_STATE, pos, my_dol) == 1) // // 컴퓨터 돌 2개 이상 있는 경우 공격. (방어 없을 시,)
+		else if (CheckMove(ATTACK_1ST, ATTACK_STATE, pos, my_dol) == 1) // 돌 2개 이상 있는 경우 공격. (방어 없을 시,)
 		{
 			is_checked = true;
 		}
-		else if (CheckMove(ATTACK_2ND, ATTACK_STATE, pos, my_dol) == 1) // 컴퓨터 돌 2개 이상 있는 경우 공격. (방어 있을 시,)
+		else if (CheckMove(ATTACK_2ND, ATTACK_STATE, pos, my_dol) == 1) // 돌 2개 이상 있는 경우 공격. (방어 있을 시,)
 		{
 			is_checked = true;
 		}
 	}
 	if (Difficulty >= 1 && !is_checked)
 	{
-		if (CheckMove(DANGER_ATTACK_2ND, GUARD_STATE, pos, my_dol) == 1) // 컴퓨터 돌 3개 있는 경우 방어. (방어 없을 시,)
+		if (CheckMove(DANGER_ATTACK_2ND, GUARD_STATE, pos, my_dol) == 1) // 돌 3개 있는 경우 방어. (방어 없을 시,)
 		{
 			is_checked = true;
 		}
-		if (CheckMove(DANGER_ATTACK_4TH, GUARD_STATE, pos, my_dol) == 1) // 플레이어 돌 3개 이상 있는 경우 방어. (방어 있을 시,)
+		if (CheckMove(DANGER_ATTACK_4TH, GUARD_STATE, pos, my_dol) == 1) // 돌 3개 이상 있는 경우 방어. (방어 있을 시,)
 		{
 			is_checked = true;
 		}
 	}
-	if (!is_checked &&CheckMove(PREATTACK_1ST, ATTACK_STATE, pos, my_dol) == 1) // 아무데나 둘 곳이 있는지 체크.-_-;
+	if (!is_checked &&CheckMove(PREATTACK_1ST, ATTACK_STATE, pos, my_dol) == 1) // 아무데나 둘 곳이 있는지 체크
 	{
 		is_checked = true;
 	}
-	else if (!is_checked && CheckMove(PREATTACK_2ND, ATTACK_STATE, pos, my_dol) == 1) // 아무데나 둘 곳이 있는지 체크.-_-;
+	else if (!is_checked && CheckMove(PREATTACK_2ND, ATTACK_STATE, pos, my_dol) == 1) // 재확인
 	{
 
 	}
@@ -273,10 +274,10 @@ bool AI::CheckMove(Priority priority, State state, Point &pos, Dol my_dol)
 							dange_cnt++;
 						}
 					}
-				} 
-			} 
-		} 
-	} 
+				}
+			}
+		}
+	}
 
 	if (dange_cnt == 0) // 공격 당할 위험이 있는곳이 없다면,
 		return false;
@@ -677,7 +678,7 @@ int AI::UpperDiagCheck(int x, int y, Dol my_dol, bool is_space_chk ) // 대각선 �
 		if (x - i >= IW && y + i < HEIGHT || i_err == true)
 		{
 			int return_value = CheckMoveContent(x - i, y + i, i, cnt, space_cnt, i_err, my_dol, guard_cnt, is_space_chk,x-i,IW,y+i,HEIGHT-1);
-			
+
 		}
 		else if (x == IW || y == HEIGHT - 1)
 		{
@@ -688,7 +689,7 @@ int AI::UpperDiagCheck(int x, int y, Dol my_dol, bool is_space_chk ) // 대각선 �
 		if (x + j < WIDTH && y - j >= IH || j_err == true)
 		{
 			int return_value = CheckMoveContent(x + j, y - j, j, cnt, space_cnt, j_err, my_dol, guard_cnt, is_space_chk,x+j,WIDTH-1,y-j,IH);
-			
+
 		}
 		else if (x == WIDTH - 1 || y == IH)
 		{
