@@ -1,5 +1,5 @@
 #include <iostream>
-#include "AI.h"
+#include "../header/AI.h"
 
 using namespace std;
 
@@ -27,7 +27,7 @@ int main()
         if(x == 0 && y == 0)    mifirst = BLACK;
         else
         {
-            board[y-1][x-1] = !mifirst; // »ó´ëÆí µ¹À» ³õ´Â´Ù.
+            board[y-1][x-1] = !mifirst; // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â´ï¿½.
             if(mifirst == BLACK)    w_cnt++;
             else    b_cnt++;
         }
